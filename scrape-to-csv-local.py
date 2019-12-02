@@ -1,4 +1,3 @@
-master
 ####
 #Author: brandon chiazza
 #version 1.0
@@ -132,4 +131,4 @@ with open(file, 'w', newline='\n') as csvfile:
 	wr.writerrow([cell for cell in schema])
 	for row in table.find_elements_by_css_selector('tr'):
 		wr.writerows([cell.text for cell in row.find_elements_by_css_selector('td')]) 
-master
+
