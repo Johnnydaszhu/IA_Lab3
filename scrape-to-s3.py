@@ -1,12 +1,12 @@
 ####
 #Author: brandon chiazza
 #version 1.0
-#references: 
+#references:
 #https://www.programiz.com/python-programming/working-csv-files
 #https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.create_bucket
 #CLI aws s3api create-bucket --bucket my-bucket-name --region us-west-2 --create-bucket-configuration LocationConstraint=us-west-2
 #https://realpython.com/python-boto3-aws-s3/
-#https://robertorocha.info/setting-up-a-selenium-web-scraper-on-aws-lambda-with-python/ 
+#https://robertorocha.info/setting-up-a-selenium-web-scraper-on-aws-lambda-with-python/
 ##
 
 import awscli
@@ -41,7 +41,7 @@ table = browser.find_element_by_css_selector('table.Bordered')
 
 #prepare csv file name
 datetime = time.strftime("%Y%m%d-%H%M%S")
-filename = '<s3folderpath>'#specify location of s3:/{my-bucket}/
+filename = 'anynameisok'#specify location of s3:/{my-bucket}/
 datetime = time.strftime("%Y%m%d%H%M%S")
 filenames3 = "%s%s.csv"%(filename,datetime)
 
@@ -53,9 +53,17 @@ for row in table.find_elements_by_css_selector('tr'):
       cols = data.append([cell.text for cell in row.find_elements_by_css_selector('td')])
 #print(data)
 
-#update dataframe with header 
+#update dataframe with header
 data = pd.DataFrame(data, columns = ["Organization Name", "NY Reg #", "EIN" ,"Registrant Type","City","State"])
 #print(data)
 
 #upload to s3
 data.to_csv(filenames3, header=True, line_terminator='\n')
+
+S3 = boto3.client('s3')
+SOURCE_FILENAME = filenames3
+BUCKET_NAME = '<BUCKET_NAME>'
+
+# Uploads the given file using a managed uploader, which will split up large
+# files automatically and upload parts in parallel.
+S3.upload_file(SOURCE_FILENAME, BUCKET_NAME, SOURCE_FILENAME)
