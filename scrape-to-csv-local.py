@@ -41,7 +41,7 @@ inputElement1 = browser.find_element_by_xpath("/html/body/div/div[2]/div/table/t
 table = browser.find_element_by_css_selector('table.Bordered')
 
 datetime = time.strftime("%Y%m%d-%H%M%S")
-filedirectory = '/Users/jz/Downloads/info-lab3'
+filedirectory = '/Users/jz/GitHub/IA_Lab3/'
 filename = 'cb_table_'
 datetime = time.strftime("%Y%m%d%H%M%S")
 file = "%s%s%s.csv"%(filedirectory,filename,datetime)
@@ -61,6 +61,6 @@ schema = ['Organization Name', 'NY Reg #','EIN','Registrant Type','City','State'
 #generate file output
 with open(file, 'w', newline='\n') as csvfile:
 	wr = csv.writer(csvfile, dialect = 'myDialect')
-	wr.writerrow([cell for cell in schema])
+	wr.writerow([cell for cell in schema])
 	for row in table.find_elements_by_css_selector('tr'):
 		wr.writerows([cell.text for cell in row.find_elements_by_css_selector('td')])
