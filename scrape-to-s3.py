@@ -1,4 +1,4 @@
-master
+
 ####
 #Author: brandon chiazza
 #version 1.0
@@ -130,4 +130,4 @@ data = pd.DataFrame(data, columns = ["Organization Name", "NY Reg #", "EIN" ,"Re
 
 #upload to s3
 data.to_csv(filenames3, header=True, line_terminator='\n')
-master
+
